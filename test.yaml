@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: storage.k8s.io/v1
+  kind: StorageClass
+  metadata:
+    name: gp2
+    annotations:
+      "storageclass.kubernetes.io/is-default-class": "true"
+  provisioner: kubernetes.io/aws-ebs
+  parameters:
+    type: gp2
+  reclaimPolicy: Retain
+  mountOptions:
+    - debug
+
+- apiVersion: v1
+  kind: Namespace
+  metadata:
+    name: smp
+
+- kind: PersistentVolume
+  apiVersion: v1
+  metadata:
+    name: smp-config-volume
+    namespace: smp
+    labels:
+      type: local
+  spec:
+    storageClassName: gp2
+    capacity:
+      storage: 20Gi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/mnt/data"
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: smp-config-claim
+    namespace: smp
+  spec:
+    storageClassName: gp2
+    accessModes:
+      - ReadWriteMany
+    resources:
+      requests:
+        storage: 20Gi
+       
+       
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: smp-fe
+    namespace: smp
+  spec:
+    selector:
+      matchLabels:
+        app: smp-fe
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: smp-fe
+      spec:
+        containers:
+        - image: 780816965116.dkr.ecr.ap-southeast-2.amazonaws.com/smp-repo:latest
+          name: smp-phoss
+          env:
+          - name: MYSQL_DB
+            value: smpdb
+          ports:
+          - containerPort: 8080
+            name: smp-fe
+          volumeMounts:
+          - name: smp-storage
+            mountPath: /config
+      volumes:
+      - name: smp-storage
+        persistentVolumeClaim:
+          claimName: smp-config-claim
+    

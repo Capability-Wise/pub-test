@@ -10,9 +10,9 @@ items:
   provisioner: kubernetes.io/aws-ebs
   parameters:
     type: gp2
-  reclaimPolicy: Retain
-  mountOptions:
-    - debug
+#  reclaimPolicy: Retain
+#  mountOptions:
+#    - debug
 
 - apiVersion: v1
   kind: Namespace

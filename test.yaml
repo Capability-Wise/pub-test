@@ -80,9 +80,15 @@ items:
             containerPort: 8080
           volumeMounts:
           - name: smp-storage
-            mountPath: /config
+            mountPath: /test
+          - name: smp-server-properties
+            mountPath: /config/smp-server.properties
+            subPath: "smp-server.properties"
         volumes:
         - name: smp-storage
           persistentVolumeClaim:
             claimName: smp-config-claim
+        - name: smp-server-properties
+          configMap:
+            name: smp-service-properties-config-map
     

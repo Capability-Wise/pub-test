@@ -1,4 +1,4 @@
 apiVersion: v1
-kind: Namespace
+kind: ConfigMap
 metadata:
-  name: smp
+  name: smp-service-properties-config-map

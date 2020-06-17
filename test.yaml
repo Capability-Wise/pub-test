@@ -39,11 +39,11 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: smp-fe
+    name: smp
     namespace: smp
   spec:
     selector:
-      app: frontend
+      app: smp
     ports:
     - port: 8080
       targetPort: 8080
@@ -52,18 +52,18 @@ items:
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
-    name: smp-fe
+    name: smp
     namespace: smp
   spec:
     selector:
       matchLabels:
-        app: smp-fe
+        app: smp
     strategy:
       type: Recreate
     template:
       metadata:
         labels:
-          app: smp-fe
+          app: smp
       spec:
         containers:
         - image: 780816965116.dkr.ecr.ap-southeast-2.amazonaws.com/smp-repo:latest
@@ -73,7 +73,7 @@ items:
             value: smpdb
           ports:
           - containerPort: 8080
-            name: smp-fe
+            name: smp
           volumeMounts:
           - name: smp-storage
             mountPath: /config

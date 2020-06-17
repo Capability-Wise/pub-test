@@ -46,7 +46,7 @@ items:
       app: smp
     ports:
     - port: 8080
-      targetPort: 8080
+      targetPort: smp-port
     type: LoadBalancer     
        
 - apiVersion: apps/v1
@@ -67,13 +67,17 @@ items:
       spec:
         containers:
         - image: 780816965116.dkr.ecr.ap-southeast-2.amazonaws.com/smp-repo:latest
-          name: smp-phoss
+          name: smp
+          resources:
+            requests:
+              memory: "512m"
+              cpu: "512m"
           env:
           - name: MYSQL_DB
             value: smpdb
           ports:
-          - containerPort: 8080
-            name: smp
+          - name: smp-port
+            containerPort: 8080
           volumeMounts:
           - name: smp-storage
             mountPath: /config

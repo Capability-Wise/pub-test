@@ -30,7 +30,7 @@ items:
   spec:
     storageClassName: gp2
     accessModes:
-      - ReadWriteMany
+      - ReadWriteOnce
     resources:
       requests:
         storage: 20Gi

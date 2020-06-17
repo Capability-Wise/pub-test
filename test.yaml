@@ -34,7 +34,20 @@ items:
     resources:
       requests:
         storage: 20Gi
-       
+  
+  
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: smp-fe
+    namespace: smp
+  spec:
+    selector:
+      app: frontend
+    ports:
+    - port: 8080
+      targetPort: 8080
+    type: LoadBalancer     
        
 - apiVersion: apps/v1
   kind: Deployment
@@ -68,3 +81,4 @@ items:
         - name: smp-storage
           persistentVolumeClaim:
             claimName: smp-config-claim
+    

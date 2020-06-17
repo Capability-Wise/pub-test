@@ -1,6 +1,11 @@
 apiVersion: v1
 kind: List
 items:
+- apiVersion: v1
+  kind: Namespace
+  metadata:
+    name: smp
+
 - kind: PersistentVolume
   apiVersion: v1
   metadata:
@@ -79,6 +84,12 @@ items:
           - name: smp-server-properties
             mountPath: /config/smp-server.properties
             subPath: "smp-server.properties"
+          - name: webapp-properties
+            mountPath: /config/webapp.properties
+            subPath: "webapp.properties"
+          - name: pd-client-properties
+            mountPath: /config/pd-client.properties
+            subPath: "pd-client.properties"
         volumes:
         - name: smp-storage
           persistentVolumeClaim:
@@ -86,4 +97,10 @@ items:
         - name: smp-server-properties
           configMap:
             name: smp-service-properties-config-map
+        - name: webapp-properties
+          configMap:
+            name: webapp-properties-map
+        - name: pd-client-properties
+          configMap:
+            name: pd-client-properties-map
     

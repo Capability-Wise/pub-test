@@ -20,8 +20,12 @@ spec:
         resources:
           requests:
             memory: "512m"
-            cpu: "512m"
-        env:
+            cpu: "512m"  
+        ports:
+        - name: smp-port
+          containerPort: 8080
+        volumeMounts:
+          env:
         - name: KEYSTORE_SECRET
           valueFrom:
             secretKeyRef:
@@ -31,11 +35,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: keystore-secrets
-              key: KEYSTORE_KEY_PASSWORD    
-        ports:
-        - name: smp-port
-          containerPort: 8080
-        volumeMounts:
+              key: KEYSTORE_KEY_PASSWORD  
         - name: smp-server-properties
           mountPath: /config/smp-server.properties
           subPath: "smp-server.properties"

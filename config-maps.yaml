@@ -8,7 +8,7 @@ items:
     namespace: smp
   data:
     smp-server.properties: |
-     [
+     [{
       # The backend to be used. Can either be "sql" or "xml". Any other value will result in a startup error
       smp.backend: sql
 
@@ -75,7 +75,7 @@ items:
 
       ## Warn if JDBC execution time is exceeded (since 5.0.6)
       jdbc.execution-time-warning.enabled: true
-      jdbc.execution-time-warning.ms: 5000
+      jdbc.execution-time-warning.ms: 5000}
      ]
    
    
@@ -86,7 +86,7 @@ items:
     namespace: smp
   data:
     webapp.properties: |
-     [
+     [{
       # Global flags for initializer
       # For production debug should be false and production should be true
       global.debug: true
@@ -116,7 +116,7 @@ items:
       webapp.directory.name: PEPPOL Directory
 
       # Don't show content of extensions by default in service groups
-      webapp.servicegroups.extensions.show: false
+      webapp.servicegroups.extensions.show: false}
      ]
    
 - apiVersion: v1
@@ -126,7 +126,7 @@ items:
     namespace: smp
   data:
     pd-client.properties: |
-     [
+     [{
       # Type (JKS or PKCS12)
       keystore.type: pkcs12
       # The path should be absolute for docker configuration
@@ -134,5 +134,5 @@ items:
       keystore.path: /config/smp.2018.pilot.p12
       keystore.password: peppol
       keystore.key.alias: smp.pilot
-      keystore.key.password: peppol
+      keystore.key.password: peppol}
      ]

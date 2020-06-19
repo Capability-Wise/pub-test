@@ -19,9 +19,9 @@ items:
       # The path should be absolute for docker configuration
       # Put the .p12 file in the same directory as this file (depends on the docker config)
       smp.keystore.path: /config/smp-test.jks
-      smp.keystore.password: ${KEYSTORE_SECRET}
+      smp.keystore.password: dummypwd
       smp.keystore.key.alias: smp-test
-      smp.keystore.key.password: ${KEYSTORE_KEY_SECRET}
+      smp.keystore.key.password:dummypwd
 
       # This default truststore handles 2010 and 2018 PKIs
       smp.truststore.type: jks
@@ -69,7 +69,7 @@ items:
       jdbc.driver: com.mysql.jdbc.Driver
       jdbc.url: jdbc:mysql://host.docker.internal:3306/smp?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       jdbc.user: root
-      jdbc.password: ${DB_SECRET}
+      jdbc.password: dummypwd
       target-database: MySQL
       jdbc.read-connections.max: 10
 

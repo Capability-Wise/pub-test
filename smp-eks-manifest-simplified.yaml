@@ -34,6 +34,9 @@ spec:
         - name: pd-client-properties
           mountPath: /config/pd-client.properties
           subPath: "pd-client.properties"
+        - name: keystore
+          mountPath: /config/smp-test.jks
+          subPath: "smp-test.jks"
       volumes:
       - name: smp-server-properties
         configMap:
@@ -44,3 +47,6 @@ spec:
       - name: pd-client-properties
         configMap:
           name: pd-client-properties-map
+      - name: keystore
+        configMap:
+          name: keystore-config-map

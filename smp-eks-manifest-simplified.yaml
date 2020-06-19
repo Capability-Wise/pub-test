@@ -1,101 +1,46 @@
-apiVersion: v1
-kind: List
-items:
-- kind: PersistentVolume
-  apiVersion: v1
-  metadata:
-    name: smp-config-volume
-    namespace: smp
-    labels:
-      type: local
-  spec:
-    storageClassName: gp2
-    capacity:
-      storage: 20Gi
-    accessModes:
-      - ReadWriteOnce
-    hostPath:
-      path: "/mnt/data"
-
-- apiVersion: v1
-  kind: PersistentVolumeClaim
-  metadata:
-    name: smp-config-claim
-    namespace: smp
-  spec:
-    storageClassName: gp2
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 20Gi
-  
-  
-- apiVersion: v1
-  kind: Service
-  metadata:
-    name: smp
-    namespace: smp
-  spec:
-    selector:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smp
+  namespace: smp
+spec:
+  selector:
+    matchLabels:
       app: smp
-    ports:
-    - port: 8080
-      targetPort: smp-port
-    type: LoadBalancer     
-       
-- apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: smp
-    namespace: smp
-  spec:
-    selector:
-      matchLabels:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
         app: smp
-    strategy:
-      type: Recreate
-    template:
-      metadata:
-        labels:
-          app: smp
-      spec:
-        containers:
-        - image: 780816965116.dkr.ecr.ap-southeast-2.amazonaws.com/smp-repo:latest
-          name: smp
-          resources:
-            requests:
-              memory: "512m"
-              cpu: "512m"
-          env:
-          - name: MYSQL_DB
-            value: smpdb
-          ports:
-          - name: smp-port
-            containerPort: 8080
-          volumeMounts:
-          - name: smp-storage
-            mountPath: /test
-          - name: smp-server-properties
-            mountPath: /config/smp-server.properties
-            subPath: "smp-server.properties"
-          - name: webapp-properties
-            mountPath: /config/webapp.properties
-            subPath: "webapp.properties"
-          - name: pd-client-properties
-            mountPath: /config/pd-client.properties
-            subPath: "pd-client.properties"
-        volumes:
-        - name: smp-storage
-          persistentVolumeClaim:
-            claimName: smp-config-claim
+    spec:
+      containers:
+      - image: 780816965116.dkr.ecr.ap-southeast-2.amazonaws.com/smp-repo:latest
+        name: smp
+        resources:
+          requests:
+            memory: "512m"
+            cpu: "512m"
+        ports:
+        - name: smp-port
+          containerPort: 8080
+        volumeMounts:
         - name: smp-server-properties
-          configMap:
-            name: smp-service-properties-config-map
+          mountPath: /config/smp-server.properties
+          subPath: "smp-server.properties"
         - name: webapp-properties
-          configMap:
-            name: webapp-properties-map
+          mountPath: /config/webapp.properties
+          subPath: "webapp.properties"
         - name: pd-client-properties
-          configMap:
-            name: pd-client-properties-map
-    
+          mountPath: /config/pd-client.properties
+          subPath: "pd-client.properties"
+      volumes:
+      - name: smp-server-properties
+        configMap:
+          name: smp-service-properties-config-map
+      - name: webapp-properties
+        configMap:
+          name: webapp-properties-map
+      - name: pd-client-properties
+        configMap:
+          name: pd-client-properties-map

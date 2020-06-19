@@ -21,6 +21,17 @@ spec:
           requests:
             memory: "512m"
             cpu: "512m"
+        env:
+        - name: KEYSTORE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: keystore-secrets
+              key: KEYSTORE_PASSWORD
+        - name: KEYSTORE_KEY_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: keystore-secrets
+              key: KEYSTORE_KEY_PASSWORD    
         ports:
         - name: smp-port
           containerPort: 8080

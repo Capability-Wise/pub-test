@@ -17,25 +17,17 @@ spec:
       containers:
       - image: 780816965116.dkr.ecr.ap-southeast-2.amazonaws.com/smp-repo:latest
         name: smp
+        envFrom:
+          - secretRef:
+              name: keystore-secrets
         resources:
-          requests:
+          requests: 
             memory: "512m"
             cpu: "512m"  
         ports:
         - name: smp-port
           containerPort: 8080
-        volumeMounts:
-          env:
-        - name: KEYSTORE_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: keystore-secrets
-              key: KEYSTORE_PASSWORD
-        - name: KEYSTORE_KEY_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: keystore-secrets
-              key: KEYSTORE_KEY_PASSWORD  
+        volumeMounts: 
         - name: smp-server-properties
           mountPath: /config/smp-server.properties
           subPath: "smp-server.properties"

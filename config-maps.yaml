@@ -54,10 +54,10 @@ items:
       # SML request timeout milliseconds
       #sml.request.timeout.ms = 20000
 
-      # Enable PEPPOL Directory integration?
+      # Enable PEPPOL Directory integration
       smp.peppol.directory.integration.enabled: false
 
-      # Use PEPPOL identifiers (with all constraints) or simple, unchecked identifiers?
+      # Use PEPPOL identifiers (with all constraints) or simple, unchecked identifiers
       # Possible values are "peppol", "simple" and "bdxr"
       smp.identifiertype: peppol
 
@@ -73,7 +73,7 @@ items:
       target-database: MySQL
       jdbc.read-connections.max: 10
 
-      ## Warn if JDBC execution time is exceeded? (since 5.0.6)
+      ## Warn if JDBC execution time is exceeded (since 5.0.6)
       jdbc.execution-time-warning.enabled: true
       jdbc.execution-time-warning.ms: 5000
      ]
@@ -96,14 +96,14 @@ items:
       # This should be absolute in production.
       webapp.datapath: conf
 
-      # Should all files of the application checked for readability?
+      # Should all files of the application checked for readability
       # This should only be set to true when datapath is a relative directory inside a production version
       webapp.checkfileaccess: false
 
       # Is it a test version? E.g. a separate header is shown
       webapp.testversion: false
 
-      # Use slow, but fancy dynamic table on the start page?
+      # Use slow, but fancy dynamic table on the start page
       webapp.startpage.dynamictable: false
 
       # Participant list is enabled by default

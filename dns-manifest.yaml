@@ -3,6 +3,8 @@ kind: ServiceAccount
 metadata:
   name: external-dns
   namespace: kube-system
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::780816965116:role/eks_ext_dns_role
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole

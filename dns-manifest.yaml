@@ -47,8 +47,6 @@ spec:
     metadata:
       labels:
         app: external-dns
-      annotations:
-        eks.amazonaws.com/role-arn: arn:aws:iam::780816965116:role/eks_ext_dns_role
     spec:
       serviceAccountName: external-dns
       containers:

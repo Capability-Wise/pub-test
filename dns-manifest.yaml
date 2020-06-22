@@ -60,6 +60,7 @@ spec:
         - --source=ingress
         - --domain-filter=smp.ata.test.anypartner.io # will make ExternalDNS see only the hosted zones matching provided domain, omit to process all available hosted zones
         - --provider=aws
+        - --aws-assume-role=arn:aws:iam::780816965116:role/eks_ext_dns_role
         - --policy=upsert-only # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
         - --aws-zone-type=public # only look at public hosted zones (valid values are public, private or no value for both)
         - --registry=txt
